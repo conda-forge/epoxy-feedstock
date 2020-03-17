@@ -15,6 +15,7 @@ source:
 
 build:
   number: 1
+  skip: true  # [win and vc<14]
   run_exports:
     - {{ pin_subpackage('epoxy', max_pin='x.x') }}
 
