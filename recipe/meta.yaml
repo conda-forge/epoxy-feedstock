@@ -14,8 +14,7 @@ source:
   sha256: {{ sha256 }}
 
 build:
-  number: 0
-  skip: True  # [win]
+  number: 1
   run_exports:
     - {{ pin_subpackage('epoxy', max_pin='x.x') }}
 
@@ -36,6 +35,9 @@ test:
   commands:
     - test -f $PREFIX/include/epoxy/common.h  # [unix]
     - test -f $PREFIX/lib/libepoxy${SHLIB_EXT}  # [unix]
+    - if not exist %PREFIX%\\Library\\include\\epoxy\\common.h exit 1  # [win]
+    - if not exist %PREFIX%\\Library\\bin\\epoxy-0.dll exit 1  # [win]
+    - if not exist %PREFIX%\\Library\\lib\\epoxy.lib exit 1  # [win]
 
 about:
   home: https://github.com/anholt/libepoxy
