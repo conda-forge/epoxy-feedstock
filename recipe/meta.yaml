@@ -22,6 +22,8 @@ build:
 requirements:
   build:
     - meson
+    # see https://github.com/mesonbuild/meson/issues/7611
+    - meson !=0.56.*  # [win]
     - ninja
     - pkg-config
     - pthread-stubs  # [linux]
