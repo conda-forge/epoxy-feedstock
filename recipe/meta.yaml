@@ -3,15 +3,15 @@
 
 {% set name = "epoxy" %}
 {% set version = "1.5.5" %}
-{% set sha256 = "261663db21bcc1cc232b07ea683252ee6992982276536924271535875f5b0556" %}
+{% set version_majmin = '.'.join(version.split('.', 2)[:2]) %}
 
 package:
   name: {{ name|lower }}
   version: {{ version }}
 
 source:
-  url: https://github.com/anholt/libepoxy/releases/download/{{ version }}/libepoxy-{{ version }}.tar.xz
-  sha256: {{ sha256 }}
+  url: https://download.gnome.org/sources/libepoxy/{{ version_majmin }}/libepoxy-{{ version }}.tar.xz
+  sha256: 261663db21bcc1cc232b07ea683252ee6992982276536924271535875f5b0556
 
 build:
   number: 0
