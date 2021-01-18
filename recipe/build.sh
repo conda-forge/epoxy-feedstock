@@ -16,6 +16,7 @@ else
         -D egl=yes
         -D x11=true
         -D tests=false
+        -D libdir=lib
     )
 fi
 
