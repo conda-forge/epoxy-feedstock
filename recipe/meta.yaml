@@ -14,33 +14,60 @@ source:
   sha256: 261663db21bcc1cc232b07ea683252ee6992982276536924271535875f5b0556
 
 build:
-  number: 0
+  number: 1
   skip: true  # [win and vc<14]
   run_exports:
     - {{ pin_subpackage('epoxy', max_pin='x.x') }}
 
 requirements:
   build:
+    - {{ compiler('c') }}
+    # The following CDTs are needed for building against egl/gl.
+    # We only actually need the headers, as epoxy doesn't link to the gl libs.
+    # We can ignore pkg-config saying it can't find egl/gl (due to missing deps
+    # included in the .pc files) since this is only currently used to add
+    # egl/gl as Requires.private dependencies in the epoxy.pc file, which
+    # itself is only used to propagate build flags from the GL libs to epoxy,
+    # and there is nothing interesting to propagate from mesa. If needed, this
+    # should get pkg-config to find egl/gl (check their .pc files to verify,
+    # probably only needed for mesa < 19):
+    #   build:
+    #     - {{ cdt('libxxf86vm-devel') }}   # [linux]
+    #   host:
+    #     - libdrm                 # [linux]
+    #     - xorg-libxdamage        # [linux]
+    #     - xorg-libxext           # [linux]
+    #     - xorg-libxfixes         # [linux]
+    #     - xorg-xf86vidmodeproto  # [linux]
+    # Since these dependencies would be needed wherever epoxy.pc is consumed,
+    # it is simpler to leave them off for now while we can.
+    - {{ cdt('mesa-libegl-devel') }}  # [linux]
+    - {{ cdt('mesa-libgl-devel') }}   # [linux]
     - meson
     # see https://github.com/mesonbuild/meson/issues/7611
     - meson !=0.56.*  # [win]
     - ninja
     - pkg-config
-    - pthread-stubs  # [linux]
-    - {{ compiler('c') }}
-    - {{ cdt('mesa-libEGL-devel') }}  # [linux]
-    - {{ cdt('mesa-libGL-devel') }}  # [linux]
-    - {{ cdt('libx11-devel') }}  # [linux]
-    - {{ cdt('xorg-x11-proto-devel') }}  # [linux]
-    - {{ cdt('xorg-x11-util-macros') }}  # [linux]
+  host:
+    - xorg-libx11  # [linux]
 
 test:
   commands:
-    - test -f $PREFIX/include/epoxy/common.h  # [unix]
-    - test -f $PREFIX/lib/libepoxy${SHLIB_EXT}  # [unix]
-    - if not exist %PREFIX%\\Library\\include\\epoxy\\common.h exit 1  # [win]
-    - if not exist %PREFIX%\\Library\\bin\\epoxy-0.dll exit 1  # [win]
-    - if not exist %PREFIX%\\Library\\lib\\epoxy.lib exit 1  # [win]
+    - test -f $PREFIX/include/epoxy/common.h         # [unix]
+    - test -f $PREFIX/include/epoxy/egl.h            # [linux]
+    - test -f $PREFIX/include/epoxy/egl_generated.h  # [linux]
+    - test -f $PREFIX/include/epoxy/gl.h             # [unix]
+    - test -f $PREFIX/include/epoxy/gl_generated.h   # [unix]
+    - test -f $PREFIX/include/epoxy/glx.h            # [linux]
+    - test -f $PREFIX/include/epoxy/glx_generated.h  # [linux]
+    - test -f $PREFIX/lib/libepoxy${SHLIB_EXT}       # [unix]
+    - if not exist %PREFIX%\\Library\\include\\epoxy\\common.h exit 1         # [win]
+    - if not exist %PREFIX%\\Library\\include\\epoxy\\gl.h exit 1             # [win]
+    - if not exist %PREFIX%\\Library\\include\\epoxy\\gl_generated.h exit 1   # [win]
+    - if not exist %PREFIX%\\Library\\include\\epoxy\\wgl.h exit 1            # [win]
+    - if not exist %PREFIX%\\Library\\include\\epoxy\\wgl_generated.h exit 1  # [win]
+    - if not exist %PREFIX%\\Library\\bin\\epoxy-0.dll exit 1                 # [win]
+    - if not exist %PREFIX%\\Library\\lib\\epoxy.lib exit 1                   # [win]
 
 about:
   home: https://github.com/anholt/libepoxy
