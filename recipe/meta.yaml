@@ -44,8 +44,6 @@ requirements:
     - {{ cdt('mesa-libegl-devel') }}  # [linux]
     - {{ cdt('mesa-libgl-devel') }}   # [linux]
     - meson
-    # see https://github.com/mesonbuild/meson/issues/7611
-    - meson !=0.56.*  # [win]
     - ninja
     - pkg-config
   host:
