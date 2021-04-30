@@ -2,7 +2,7 @@
 # This file is licensed under a 3-clause BSD license; see LICENSE.txt.
 
 {% set name = "epoxy" %}
-{% set version = "1.5.5" %}
+{% set version = "1.5.6" %}
 {% set version_majmin = '.'.join(version.split('.', 2)[:2]) %}
 
 package:
@@ -11,10 +11,10 @@ package:
 
 source:
   url: https://download.gnome.org/sources/libepoxy/{{ version_majmin }}/libepoxy-{{ version }}.tar.xz
-  sha256: 261663db21bcc1cc232b07ea683252ee6992982276536924271535875f5b0556
+  sha256: 5b38c330f22430e516bd925aa0248d247486c17092bb3c8570f8211955e6258c
 
 build:
-  number: 1
+  number: 0
   skip: true  # [win and vc<14]
   run_exports:
     - {{ pin_subpackage('epoxy', max_pin='x.x') }}
@@ -72,7 +72,7 @@ about:
   license: MIT
   license_family: MIT
   license_file: COPYING
-  summary: 'A library for handling OpenGL function pointer management for you.'
+  summary: A library for handling OpenGL function pointer management for you.
   description: |
     Epoxy is a library for handling OpenGL function pointer management for you.
 
