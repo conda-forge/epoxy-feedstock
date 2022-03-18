@@ -2,7 +2,7 @@
 # This file is licensed under a 3-clause BSD license; see LICENSE.txt.
 
 {% set name = "epoxy" %}
-{% set version = "1.5.9" %}
+{% set version = "1.5.10" %}
 {% set version_majmin = '.'.join(version.split('.', 2)[:2]) %}
 
 package:
@@ -11,7 +11,7 @@ package:
 
 source:
   url: https://download.gnome.org/sources/libepoxy/{{ version_majmin }}/libepoxy-{{ version }}.tar.xz
-  sha256: d168a19a6edfdd9977fef1308ccf516079856a4275cf876de688fb7927e365e4
+  sha256: 072cda4b59dd098bba8c2363a6247299db1fa89411dc221c8b81b8ee8192e623
 
 build:
   number: 0
