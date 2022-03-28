@@ -18,6 +18,9 @@ else
         -D tests=false
         -D libdir=lib
     )
+    # hack to prevent x11 from being found by meson and added as pkg-config dep
+    # but still have the headers present for successful compilation
+    rm -f $PREFIX/lib/pkgconfig/x11.pc
 fi
 
 meson setup builddir \
