@@ -50,6 +50,8 @@ requirements:
     - xorg-libx11  # [linux]
 
 test:
+  requires:
+    - pkg-config
   commands:
     - test -f $PREFIX/include/epoxy/common.h         # [unix]
     - test -f $PREFIX/include/epoxy/egl.h            # [linux]
@@ -66,6 +68,8 @@ test:
     - if not exist %PREFIX%\\Library\\include\\epoxy\\wgl_generated.h exit 1  # [win]
     - if not exist %PREFIX%\\Library\\bin\\epoxy-0.dll exit 1                 # [win]
     - if not exist %PREFIX%\\Library\\lib\\epoxy.lib exit 1                   # [win]
+    - pkg-config --debug --exists epoxy
+    - pkg-config --validate epoxy
 
 about:
   home: https://github.com/anholt/libepoxy
