@@ -14,7 +14,7 @@ source:
   sha256: 072cda4b59dd098bba8c2363a6247299db1fa89411dc221c8b81b8ee8192e623
 
 build:
-  number: 0
+  number: 1
   skip: true  # [win and vc<14]
   run_exports:
     - {{ pin_subpackage('epoxy', max_pin='x.x') }}
