@@ -24,7 +24,9 @@ requirements:
     - pkg-config
   host:
     - libdrm                    # [linux]
+    - libegl-devel              # [linux]
     - libgl-devel               # [linux]
+    - libglx-devel              # [linux]
     - xorg-libx11               # [linux]
     - xorg-libxdamage           # [linux]
     - xorg-libxext              # [linux]
