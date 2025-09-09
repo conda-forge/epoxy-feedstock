@@ -33,6 +33,10 @@ requirements:
     - xorg-libxfixes            # [linux]
     - xorg-libxxf86vm           # [linux]
     - xorg-xf86vidmodeproto     # [linux]
+  run:
+    - libegl-devel              # [linux]
+    - libgl-devel               # [linux]
+    - libglx-devel              # [linux]
 
 test:
   requires:
