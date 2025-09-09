@@ -19,32 +19,18 @@ requirements:
   build:
     - {{ stdlib('c') }}
     - {{ compiler('c') }}
-    # The following CDTs are needed for building against egl/gl.
-    # We only actually need the headers, as epoxy doesn't link to the gl libs.
-    # We can ignore pkg-config saying it can't find egl/gl (due to missing deps
-    # included in the .pc files) since this is only currently used to add
-    # egl/gl as Requires.private dependencies in the epoxy.pc file, which
-    # itself is only used to propagate build flags from the GL libs to epoxy,
-    # and there is nothing interesting to propagate from mesa. If needed, this
-    # should get pkg-config to find egl/gl (check their .pc files to verify,
-    # probably only needed for mesa < 19):
-    #   build:
-    #     - {{ cdt('libxxf86vm-devel') }}   # [linux]
-    #   host:
-    #     - libdrm                 # [linux]
-    #     - xorg-libxdamage        # [linux]
-    #     - xorg-libxext           # [linux]
-    #     - xorg-libxfixes         # [linux]
-    #     - xorg-xf86vidmodeproto  # [linux]
-    # Since these dependencies would be needed wherever epoxy.pc is consumed,
-    # it is simpler to leave them off for now while we can.
-    - {{ cdt('mesa-libegl-devel') }}  # [linux]
-    - {{ cdt('mesa-libgl-devel') }}   # [linux]
     - meson
     - ninja
     - pkg-config
   host:
-    - xorg-libx11  # [linux]
+    - libdrm                    # [linux]
+    - libgl-devel               # [linux]
+    - xorg-libx11               # [linux]
+    - xorg-libxdamage           # [linux]
+    - xorg-libxext              # [linux]
+    - xorg-libxfixes            # [linux]
+    - xorg-libxxf86vm           # [linux]
+    - xorg-xf86vidmodeproto     # [linux]
 
 test:
   requires:
