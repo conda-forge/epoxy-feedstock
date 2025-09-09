@@ -1,12 +1,10 @@
 # Prior to conda-forge, Copyright 2018-2019 Peter Williams and collaborators.
 # This file is licensed under a 3-clause BSD license; see LICENSE.txt.
-
-{% set name = "epoxy" %}
 {% set version = "1.5.10" %}
 {% set version_majmin = '.'.join(version.split('.', 2)[:2]) %}
 
 package:
-  name: {{ name|lower }}
+  name: epoxy
   version: {{ version }}
 
 source:
@@ -15,12 +13,12 @@ source:
 
 build:
   number: 1
-  skip: true  # [win and vc<14]
   run_exports:
     - {{ pin_subpackage('epoxy', max_pin='x.x') }}
 
 requirements:
   build:
+    - {{ stdlib('c') }}
     - {{ compiler('c') }}
     # The following CDTs are needed for building against egl/gl.
     # We only actually need the headers, as epoxy doesn't link to the gl libs.
